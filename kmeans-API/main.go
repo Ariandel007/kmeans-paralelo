@@ -21,7 +21,8 @@ func main() {
 	// conectar a la base de datos
 	models.ConnectDatabase()
 
-	r.GET("/clusters", controllers.RealizarClustering)
+	r.GET("/clusters/:k", controllers.RealizarClustering)
+	r.GET("/diagnosticos", controllers.GetDiagnosticos)
 
 	//correr el servidor
 	r.Run()

@@ -14,8 +14,8 @@ export class ClusteringService {
 
   constructor(private http: HttpClient) { }
 
-  getClusters(): Observable<GroupedData> {
-    return this.http.get<GroupedData>(this.baseUrl + 'clusters');
+  getClusters(k: number): Observable<GroupedData> {
+    return this.http.get<GroupedData>(this.baseUrl + 'clusters/' + k);
   }
 
 }

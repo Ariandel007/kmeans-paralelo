@@ -1,10 +1,10 @@
-/* Add a black background color to the top navigation */
+
 .topnav {
   background-color: #3ABABA;
   overflow: hidden;
 }
 
-/* Style the links inside the navigation bar */
+
 .topnav a {
   float: left;
   color: #f2f2f2;
@@ -14,25 +14,26 @@
   font-size: 17px;
 }
 
-/* Change the color of links on hover */
+
 .topnav a:hover {
   background-color: #f2f2f2;
   color: black;
+  cursor: pointer;
 }
 
-/* Add a color to the active/current link */
+
 .topnav a.active {
   background-color: #4CAF50;
   color: white;
 }
 
 
-/********************************/
+
 * {
   box-sizing: border-box;
 }
 
-/* Create two equal columns that floats next to each other */
+
 .column {
   float: left;
   width: 100%;
@@ -41,13 +42,13 @@
   margin-bottom: 10px;
 }
 
-/* Clear floats after the columns */
+
 .row:after {
   content: "";
   display: table;
   clear: both;
 }
-/* Style the buttons */
+
 .btn {
   border: none;
   outline: none;
@@ -114,3 +115,12 @@ th {
   background-color: #AAD627;
   color: white;
 }
+
+
+input[type=text] {
+  margin: 8px 0;
+  box-sizing: border-box;
+  border: 2px solid #3ABABA;
+  border-radius: 4px;
+}
+

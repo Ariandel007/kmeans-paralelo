@@ -1,8 +1,8 @@
 <div class="topnav">
-  <a>Clusters Calculados</a>
-  <a>Lista de datos</a>
+  <a (click)="setSeccion(1)">Calcular Clusters</a>
+  <a (click)="setSeccion(2)">Lista de datos en el dataset</a>
 </div>
-<div>Para informarse mejor que significa cada caolumna:</div>
+<div>Para informarse mejor que significa cada columna:</div>
 <ul class="one">
   <li>Edad: la edad de la persona en años.</li>
   <li>Sexo: El sexo de la persona (1 = hombre, 0 = mujer). </li>
@@ -19,17 +19,22 @@
   <li>talasemia: 3 = normal; 6 = defecto fijo; 7 = defecto reversible </li>
   <li>Diagnóstico: enfermedad cardíaca (0 = no, 1 = sí)</li>
 </ul>
-
 <br/>
+
+<div *ngIf="seccion == 1">
+
 <div class="row center">
-  <button class="button button3" (click)="agruparDatos()" >Calcular</button>
+  <form #createKclustersForm="ngForm" (ngSubmit)="agruparDatos()">
+    <label for="fname" class="row"><h3>Ingrese a cuantos clusters desea agrupar</h3></label>
+    <input type="text" min=2 id="lname" name="lname" name="kNumber" placeholder="numero de k medias" required [(ngModel)]="k">
+    <button [disabled]="!createKclustersForm.valid" class="button button3" type="submit">Calcular</button>
+  </form>
 </div>
 
 <div>
-
   <div class="row">
-    <div *ngFor="let g of groupedData.data" class="column">
-      <h2>Cluster</h2>
+    <div *ngFor="let g of groupedData.data; let i = index" class="column">
+      <h2>Cluster {{i + 1}}</h2>
       <table>
         <tr>
           <th>Edad</th>
@@ -45,7 +50,7 @@
           <th>Pendiente</th>
           <th>Nº Vasos principales</th>
           <th>Talasemia</th>
-          <th>Enfermedad cardiaca</th>
+          <!-- <th>Enfermedad cardiaca</th> -->
         </tr>
         <tr *ngFor="let d of g">
           <td>{{d.age}}</td>
@@ -61,11 +66,53 @@
           <td>{{d.slope}}</td>
           <td>{{d.ca}}</td>
           <td>{{d.thal}}</td>
-          <td>{{d.target}}</td>
+          <!-- <td>{{d.target}}</td> -->
         </tr>
       </table>
 
     </div>
   </div>
+</div>
 
+</div>
+
+<div *ngIf="seccion == 2">
+  <div class="column">
+    <h2>LISTA COMPLETA DE DIAGNOSTICOS</h2>
+    <table>
+      <tr>
+        <th>Edad</th>
+        <th>Sexo</th>
+        <th>Dolor Toracico</th>
+        <th>Presion Arterial en reposo</th>
+        <th>Colesterol(mg/dL) </th>
+        <th>Azucar en sangre(ayunas)</th>
+        <th>Resultados electrocardiográficos en reposo</th>
+        <th>Frecuencia cardíaca máxima alcanzada</th>
+        <th>Angina por el ejercicio</th>
+        <th>Depresion ST</th>
+        <th>Pendiente</th>
+        <th>Nº Vasos principales</th>
+        <th>Talasemia</th>
+        <!-- <th>Enfermedad cardiaca</th> -->
+      </tr>
+      <tr *ngFor="let d of diagnostics.data">
+        <td>{{d.age}}</td>
+        <td>{{d.sex}}</td>
+        <td>{{d.cp}}</td>
+        <td>{{d.trestbps}}</td>
+        <td>{{d.chol}}</td>
+        <td>{{d.fbs}}</td>
+        <td>{{d.restecg}}</td>
+        <td>{{d.thalach}}</td>
+        <td>{{d.exang}}</td>
+        <td>{{d.oldpeak}}</td>
+        <td>{{d.slope}}</td>
+        <td>{{d.ca}}</td>
+        <td>{{d.thal}}</td>
+        <!-- <td>{{d.target}}</td> -->
+      </tr>
+    </table>
+
+  </div>
 </div>

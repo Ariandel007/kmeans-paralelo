@@ -2,11 +2,11 @@ package controllers
 
 //importamos gin que es un mini-framework que nos da lo necesario para realizar una API REST
 import (
-	"net/http"
-
 	"../kmeans"
 	"../models"
 	"github.com/gin-gonic/gin"
+	"net/http"
+	"strconv"
 )
 
 func RealizarClustering(c *gin.Context) {
@@ -33,9 +33,9 @@ func RealizarClustering(c *gin.Context) {
 			float64(diagnostic.Thal),
 			float64(diagnostic.Target)}})
 	}
-
-	var k uint64 = 2
-	var clusters = kmeans.KMEANS(data, k, 1)
+	param := c.Param("k")
+	k, _ := strconv.Atoi(param)
+	var clusters = kmeans.KMEANS(data, uint64(k), 1)
 
 	var listRes [][]models.Diagnostic
 
@@ -67,4 +67,10 @@ func RealizarClustering(c *gin.Context) {
 
 	c.JSON(http.StatusOK, gin.H{"data": listRes})
 
+}
+
+func GetDiagnosticos(c *gin.Context) {
+	var diagnostics []models.Diagnostic
+	models.DB.Find(&diagnostics)
+	c.JSON(http.StatusOK, gin.H{"data": diagnostics})
 }
