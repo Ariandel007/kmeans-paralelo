@@ -62,8 +62,8 @@ func (centroide1 *Centroide) reCentrar() float64 {
 
 // data: los puntos que se quieren agrupar
 // k: numero de clusters
-// DELTA: el valor de variacipn maximo en el que se espera que se reacomode cada centroide respecto a su anterior iteracion
-func KMEANS(data []Punto, k uint64, DELTA float64) (centroides []Centroide) {
+// threshold: el valor de variacipn maximo en el que se espera que se reacomode cada centroide respecto a su anterior iteracion
+func KMEANS(data []Punto, k uint64, threshold float64) (centroides []Centroide) {
 	//se crean k centroides, estos son k puntos seleccionados aleatoriamente
 	for i := uint64(0); i < k; i++ {
 		centroides = append(centroides, Centroide{Centro: data[rand.Intn(len(data))]})
@@ -99,20 +99,20 @@ func KMEANS(data []Punto, k uint64, DELTA float64) (centroides []Centroide) {
 		wg.Wait()
 
 		// asignamos el menor valor posible a delta maximo
-		deltaMaximo := -math.MaxFloat64
+		thresholdMaximo := -math.MaxFloat64
 
 		for i := range centroides {
 			// el movimiento es la distancia del dentro recalculado con el anterior
 			movimiento := centroides[i].reCentrar()
 			//comparando la distanica con el delta maximo
-			if movimiento > deltaMaximo {
-				deltaMaximo = movimiento
+			if movimiento > thresholdMaximo {
+				thresholdMaximo = movimiento
 			}
 		}
 
-		//se DELTA con el delta maximo, en caso de que DELTA sea mayor o igual que deltaMaximo quiere decir que
+		//se compara threshold con el delta maximo, en caso de que threshold sea mayor o igual que thresholdMaximo quiere decir que
 		// ya hubo poca variacion en el desplazamiento de los centroides, lo cual quiere decir que ya esta convergido
-		if DELTA >= deltaMaximo {
+		if threshold >= thresholdMaximo {
 			convergido = true
 		} else {
 			//eliminar los puntos dentro de cada cluster
